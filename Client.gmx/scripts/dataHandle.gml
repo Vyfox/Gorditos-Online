@@ -39,6 +39,25 @@ switch(msgId)
         }
     break;
     
+    case 2: // player name
+        var pId = buffer_read(buffer, buffer_u32);
+        var myName = buffer_read(buffer, buffer_string);
+        with(oLocalPlayer)
+        {
+            if (localPlayerSocket == pId)
+            {
+                localPlayerName = myName;
+            }
+        }
+        with(oOther)
+        {
+            if (otherPlayerSocket == pId)
+            {
+                otherPlayerName = myName;
+            }
+        }
+    break;
+    
     case 3: // time to add the players already in game
         var amountOfPlayers = buffer_read(buffer, buffer_u32);
         //show_message("players:"+string(amountOfPlayers));

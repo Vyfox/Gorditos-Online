@@ -25,95 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///NETWORKING variables
-localPlayerId = 0;
-localPlayerSocket = 0;
-localPlayerName = "";
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///local game
-image_speed = 0;
-vivo = 1;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="2">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>oCountDown.image_index = 0;
-oCountDown.visible = true;
-oCountDown.image_speed = 1/room_speed;
-sprite_index = sBoom;
-image_speed = 0.1;
-var audio = choose(snBoom1,snBoom2);
-audio_sound_pitch(audio, choose(0.9, 1, 1.1));
-var audio2 = snScream;
-audio_sound_pitch(audio2, choose(0.9, 1, 1.1));
-if !audio_is_playing(audio)
-    {
-    audio_play_sound(audio,1,false);
-    }
-if !audio_is_playing(audio2)
-    {
-    audio_play_sound(audio2,1,false);
-    }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>image_index = 0;
+            <string>sentido = choose(1,-1)
+physics_apply_torque(200*sentido)
+force = 100;
+alarm[0] = 10;
+phy_rotation= random(360)
 </string>
           </argument>
         </arguments>
@@ -136,16 +52,22 @@ if !audio_is_playing(audio2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sprite_index = sIdle;
-oCountDown.visible = false;
-oCountDown.image_speed = 0;
-oCountDown.image_index = 0;
+            <string>sentido = choose(1,-1);
+physics_apply_torque(200*sentido);
+physics_apply_local_impulse(0,0,force,0);
+alarm[0] = irandom_range(60,300);
+var audio = snPedo;
+audio_sound_pitch(audio, choose(0.8,0.9, 1, 1.1,1.2));
+if !audio_is_playing(snPedo)
+    {
+    audio_play_sound(audio,1,false)
+    }
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="4" ename="oGordoMenu">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -162,34 +84,8 @@ oCountDown.image_index = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if vivo = 0
-{
-vivo = 1;
-alarm[2] = 1;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="oOther">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>var audio = choose(snBoing1,snBoing2);
+            <string>///Rebota
+var audio = choose(snBoing1,snBoing2);
 audio_sound_pitch(audio, choose(0.9, 1, 1.1));
 if !audio_is_playing(audio)
     {
@@ -200,7 +96,7 @@ if !audio_is_playing(audio)
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="7">
+    <event eventtype="4" ename="oBox">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -217,24 +113,49 @@ if !audio_is_playing(audio)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if vivo = 1
-{
-image_index = 1;
-alarm[1] = 10 //sprite normal
-//NETWORKING***
-buffer_seek(global.buffer, buffer_seek_start, 0);
-buffer_write(global.buffer, buffer_u8, 6) //send if tapped
-buffer_write(global.buffer, buffer_u32, oLocalPlayer.localPlayerSocket);
-buffer_write(global.buffer, buffer_u32, 1);
-network_send_packet(oClient.clientSocket, global.buffer, buffer_tell(global.buffer));
-//*************
-var audio = snPedo;
+            <string>///Rebota
+var audio = choose(snBoing1,snBoing2);
 audio_sound_pitch(audio, choose(0.9, 1, 1.1));
-if !audio_is_playing(snPedo)
+if !audio_is_playing(audio)
     {
-    audio_play_sound(audio,1,false)
+    audio_play_sound(audio,1,false);
     }
-}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="oSpikes">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>sprite_index = sBoom;
+image_speed = 0.1;
+var audio = choose(snBoom1,snBoom2);
+audio_sound_pitch(audio, choose(0.9, 1, 1.1));
+var audio2 = snScream;
+audio_sound_pitch(audio2, choose(0.9, 1, 1.1));
+if !audio_is_playing(audio)
+    {
+    audio_play_sound(audio,1,false);
+    }
+if !audio_is_playing(audio2)
+    {
+    audio_play_sound(audio2,1,false);
+    }
 </string>
           </argument>
         </arguments>
@@ -259,38 +180,11 @@ if !audio_is_playing(snPedo)
             <kind>1</kind>
             <string>if sprite_index = sBoom
 {
-alarm[0] = 300; //respawn time
-sprite_index = sIdle;
+instance_create(xstart,ystart,oSpawnGorditos);
+image_index = image_number-1;
 image_speed = 0;
+instance_destroy();
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///draw self and socket or name
-draw_self();
-//draw_text(x-7,y-16,"i:"+string(localPlayerId));
-draw_text(x-25,y-32,string(localPlayerName));
-//draw_text(x-7,y,"ang:"+string(image_angle));
-
 </string>
           </argument>
         </arguments>
@@ -309,7 +203,7 @@ draw_text(x-25,y-32,string(localPlayerName));
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>21,31</point>
+    <point>21,32</point>
     <point>17,32</point>
   </PhysicsShapePoints>
 </object>

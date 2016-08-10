@@ -5,20 +5,29 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound">
-    <sound>sound\snPedo1</sound>
-    <sound>sound\snPedo2</sound>
-    <sound>sound\snPedo3</sound>
-    <sound>sound\snPedo4</sound>
-    <sound>sound\snBoom</sound>
+    <sound>sound\snPedo</sound>
+    <sound>sound\snBoom1</sound>
+    <sound>sound\snBoom2</sound>
+    <sound>sound\snBoing1</sound>
+    <sound>sound\snBoing2</sound>
+    <sound>sound\snScream</sound>
+    <sound>sound\msMenu</sound>
+    <sound>sound\msEnd</sound>
   </sounds>
   <sprites name="sprites">
-    <sprite>sprites\sIdle</sprite>
-    <sprite>sprites\sOtherIdle</sprite>
-    <sprite>sprites\sBox</sprite>
-    <sprite>sprites\sSpikes</sprite>
-    <sprite>sprites\sBoom</sprite>
-    <sprite>sprites\sOtherBoom</sprite>
-    <sprite>sprites\sDoor</sprite>
+    <sprites name="InGame">
+      <sprite>sprites\sDoor</sprite>
+      <sprite>sprites\sBoom</sprite>
+      <sprite>sprites\sIdle</sprite>
+      <sprite>sprites\sBox</sprite>
+      <sprite>sprites\sOtherIdle</sprite>
+      <sprite>sprites\sSpikes</sprite>
+      <sprite>sprites\sOtherBoom</sprite>
+      <sprite>sprites\sCountDown</sprite>
+    </sprites>
+    <sprites name="Menus">
+      <sprite>sprites\sBtnMenus</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -30,6 +39,13 @@
       <objects name="Networking">
         <object>objects\oClient</object>
       </objects>
+      <objects name="Menus">
+        <object>objects\oBtnJoin</object>
+        <object>objects\oBtnExit</object>
+        <object>objects\oSpawnGorditos</object>
+        <object>objects\oGordoMenu</object>
+      </objects>
+      <object>objects\oControlTemp</object>
     </objects>
     <objects name="localGame">
       <object>objects\oLocalPlayer</object>
@@ -37,10 +53,12 @@
       <object>objects\oDoor</object>
       <object>objects\oSpikes</object>
       <object>objects\oBox</object>
+      <object>objects\oCountDown</object>
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_game</room>
+    <room>rooms\rmMenu</room>
+    <room>rooms\rmGame</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

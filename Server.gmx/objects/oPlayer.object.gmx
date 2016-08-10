@@ -113,17 +113,6 @@ phy_position_y = oDoor.y;
 visible = true;
 sentido = choose(1,-1);
 physics_apply_torque(200*sentido);
-///NETWORKING
-for (var i = 0; i &lt; ds_list_size(global.players); i++)
-    {
-    var storedPlayerSocket = ds_list_find_value(global.players,i);
-        buffer_seek(global.buffer, buffer_seek_start, 0);
-        buffer_write(global.buffer, buffer_u8, 6) //send that I have respawned
-        buffer_write(global.buffer, buffer_u32, playerSocket);
-        buffer_write(global.buffer, buffer_u32, 1);//vivo = 1
-    network_send_packet(storedPlayerSocket, global.buffer, buffer_tell(global.buffer));
-    }
-//*************
 </string>
           </argument>
         </arguments>
@@ -218,7 +207,7 @@ for (var i = 0; i &lt; ds_list_size(global.players); i++)
     {
     var storedPlayerSocket = ds_list_find_value(global.players,i);
         buffer_seek(global.buffer, buffer_seek_start, 0);
-        buffer_write(global.buffer, buffer_u8, 6) //send position and rotataion
+        buffer_write(global.buffer, buffer_u8, 6) //player explodes or dies
         buffer_write(global.buffer, buffer_u32, playerSocket);
         buffer_write(global.buffer, buffer_u32, 0); //esta muerto
     network_send_packet(storedPlayerSocket, global.buffer, buffer_tell(global.buffer));
@@ -345,6 +334,6 @@ draw_text(x-5,y+2,string(playerSocket))
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>21,31</point>
-    <point>15,32</point>
+    <point>17,32</point>
   </PhysicsShapePoints>
 </object>

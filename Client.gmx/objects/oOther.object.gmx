@@ -28,6 +28,44 @@
             <string>///NETWORKING variables
 otherPlayerId = 0;
 otherPlayerSocket = 0;
+otherPlayerName = "";
+vivo = 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>sprite_index = sOtherBoom;
+image_speed = 0.1;
+var audio = choose(snBoom1,snBoom2);
+audio_sound_pitch(audio, choose(0.9, 1, 1.1));
+var audio2 = snScream;
+audio_sound_pitch(audio2, choose(0.9, 1, 1.1));
+if !audio_is_playing(audio)
+    {
+    audio_play_sound(audio,1,false);
+    }
+if !audio_is_playing(audio2)
+    {
+    audio_play_sound(audio2,1,false);
+    }
 </string>
           </argument>
         </arguments>
@@ -56,7 +94,7 @@ otherPlayerSocket = 0;
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="oSpikes">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -73,12 +111,11 @@ otherPlayerSocket = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sprite_index = sOtherBoom;
-image_speed = 0.1;
-if !audio_is_playing(snBoom)
-    {
-    audio_play_sound(snBoom,1,false);
-    }
+            <string>if vivo = 0
+{
+    vivo = 1;
+    alarm[2] = 1;
+}
 </string>
           </argument>
         </arguments>
@@ -131,7 +168,8 @@ image_speed = 0;
             <kind>1</kind>
             <string>draw_self();
 //draw_text(x-5,y-16,string(otherPlayerId));
-draw_text(x-5,y+2,string(otherPlayerSocket));
+//draw_text(x-5,y+2,string(otherPlayerSocket));
+draw_text(x-25,y-32,string(otherPlayerName));
 </string>
           </argument>
         </arguments>

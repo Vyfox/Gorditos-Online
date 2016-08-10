@@ -2,7 +2,7 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -25,29 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///conexion al server, buffer, creacion de player
-clientSocket = network_create_socket(network_socket_tcp);
-connection = network_connect(clientSocket, "192.168.0.16", 6510);
-
-//buffer
-global.buffer = buffer_create(1024, buffer_fixed, 1);
-
-//si no se conecta...
-if (connection) == -1
-{
-game_end();
-}
-//si se conecta...
-else
-{
-instance_create(32,32,oLocalPlayer);
-}
+            <string>global.myName = "";
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="68">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -64,13 +48,19 @@ instance_create(32,32,oLocalPlayer);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dataHandle();
+            <string>//NETWORKING***
+buffer_seek(global.buffer, buffer_seek_start, 0);
+buffer_write(global.buffer, buffer_u8, 7) //send socket and name
+buffer_write(global.buffer, buffer_u32, oLocalPlayer.localPlayerSocket);
+buffer_write(global.buffer, buffer_string, global.myName);
+network_send_packet(oClient.clientSocket, global.buffer, buffer_tell(global.buffer));
+//*************
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="3">
+    <event eventtype="7" enumb="4">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -87,7 +77,10 @@ instance_create(32,32,oLocalPlayer);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>network_destroy(clientSocket);
+            <string>if room = rmGame
+{
+alarm[0] = 5;
+}
 </string>
           </argument>
         </arguments>
